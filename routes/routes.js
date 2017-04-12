@@ -1,6 +1,6 @@
-const chgpass   = require('./config/chgpass')
-const register  = require('./config/register')
-const login     = require('./config/login')
+const chgpass   = require('../config/chgpass')
+const register  = require('../config/register')
+const login     = require('../config/login')
 
 module.exports = (app) => {
 

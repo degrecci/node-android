@@ -17,7 +17,7 @@ exports.cpass = (id, opass, npass, callback) => {
     const newpass1 = temp1 + npass;
     const hashed_passwordn = crypto.createHash('sha512').update(newpass1).digest("hex");
 
-    user.find({token: id} (err,users) => {
+    user.find({token: id}, (err,users) => {
 
         if (users.length != 0){
                         
@@ -30,7 +30,7 @@ exports.cpass = (id, opass, npass, callback) => {
 
                 if (npass.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/) && npass.length > 4 && npass.match(/[0-9]/) && npass.match(/.[!,@,#,$,%,^,&,*,?,_,~]/)) {
 
-                    user.findOne({ token:id } (err, doc) => {
+                    user.findOne({ token:id }, (err, doc) => {
 
                         doc.hashed_password = hashed_passwordn
                         doc.salt = temp1
@@ -88,7 +88,7 @@ exports.respass_init = (email, callback) => {
     })
 }
 
-exports.respass_chg = (email, code, npass, callback) {
+exports.respass_chg = (email, code, npass, callback) => {
 
     user.find({email: email }, (err, users) => {
 
@@ -105,22 +105,28 @@ exports.respass_chg = (email, code, npass, callback) {
 
                     user.findOne({ email: email }, (err, doc) => {
 
-                        doc.hashed_password = hashed_password                        
-                        doc.salt            = temp1
-                        doc.temp_str        = ""
-                        doc.save()
-
-                        callback({'response':"Password Succesfully Changed", 'res': true})
-                    }
-                })
+                        doc.hashed_password= hashed_password;
+                        doc.salt = temp1;
+                        doc.temp_str = "";
+                        doc.save();
+ 
+                        callback({'response':"Password Sucessfully Changed",'res':true});
+ 
+                    })
+                } else {
+ 
+                    callback({'response':"New Password is Weak. Try a Strong Password !",'res':false});
+ 
+                }
             } else {
-                callback({'response':"New password is weak. Try a strong password!", 'res':false})
+ 
+                callback({'response':"Code does not match. Try Again !",'res':false});
+ 
             }
         } else {
-            callback({'response':"Code does not match. Try again !", 'res': false})
+ 
+            callback({'response':"Error",'res':true});
+ 
         }
-    } else {
-        callback({'response':"Error", 'res': true})
-    }
-})
+    })
 }
