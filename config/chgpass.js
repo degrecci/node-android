@@ -104,6 +104,23 @@ exports.respass_chg = (email, code, npass, callback) {
                 if (npass.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/) && npass.length > 4 && npass.match(/[0-9]/) && npass.match(/.[!,@,#,$,%,^,&,*,?,_,~]/)) {
 
                     user.findOne({ email: email }, (err, doc) => {
+
+                        doc.hashed_password = hashed_password                        
+                        doc.salt            = temp1
+                        doc.temp_str        = ""
+                        doc.save()
+
+                        callback({'response':"Password Succesfully Changed", 'res': true})
+                    }
+                })
+            } else {
+                callback({'response':"New password is weak. Try a strong password!", 'res':false})
+            }
+        } else {
+            callback({'response':"Code does not match. Try again !", 'res': false})
         }
-    })
+    } else {
+        callback({'response':"Error", 'res': true})
+    }
+})
 }
