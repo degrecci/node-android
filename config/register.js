@@ -1,7 +1,7 @@
 const crypto    = require('crypto')
 const rand      = require('csprng')
 const mongoose  = require('mongoose')
-const user      = require('./config/models')
+const user      = require('./models')
 
 exports.register = (email, password,callback) => {
     let x = email

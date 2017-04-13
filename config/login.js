@@ -2,7 +2,7 @@ const crypto    = require('crypto');
 const rand      = require('csprng');
 const mongoose  = require('mongoose');
 const gravatar  = require('gravatar');
-const user      = require('./config/models');
+const user      = require('./models');
 
 exports.login = (email, password, callback) => {
 

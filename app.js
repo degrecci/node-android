@@ -12,3 +12,5 @@ app.use(connect.urlencoded());
 
 // === Routes ===
 require('./routes/routes.js')(app)
+
+console.log(`App is running on ${port}`)

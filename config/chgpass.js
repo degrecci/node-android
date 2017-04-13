@@ -1,8 +1,8 @@
-const crypto     = require('crypto');
-const rand       = require('csprng');
-const mongoose   = require('mongoose');
-const nodemailer = require('nodemailer');
-const user       = require('config/models');
+const crypto     = require('crypto')
+const rand       = require('csprng')
+const mongoose   = require('mongoose')
+const nodemailer = require('nodemailer')
+const user       = require('./models')
 
 const smtpTransport = nodemailer.createTransport("SMTP", {
     auth: {
@@ -13,7 +13,7 @@ const smtpTransport = nodemailer.createTransport("SMTP", {
 
 exports.cpass = (id, opass, npass, callback) => {
 
-    const temp1 =rand (160, 36);
+    const temp1 = rand (160, 36);
     const newpass1 = temp1 + npass;
     const hashed_passwordn = crypto.createHash('sha512').update(newpass1).digest("hex");
 
